@@ -1,0 +1,36 @@
+CORS(跨来源资源共享)：分为简单请求和非简单请求两种，
+                    简单请求：请求方法只限于HEAD,GET,POST而且请求头参数仅限于以下字段
+                        Accept
+                        Accept-Language
+                        Content-Language
+                        Last-Event-ID
+                        Content-Type：只限于三个值application/x-www-form-urlencoded、multipart/form-data、text/plain
+                    不满足上述条件的则为非简单请求
+    简单请求处理流程：请求头添加Origin（说明本次请求来自那个源即协议名，主机号，端口号）
+                    如果该源不再许可范围内：服务器会返回正常响应（状态码可能为200），但响应头不会包含Access-Control-Allow-Origin，抛出的错误
+                    会被XMLHttpRequest的onerror回调函数捕获
+                    如果origin在许可范围内，响应头会多出几个字段：
+                        Access-Control-Allow-Origin: http://api.bob.com (必须，如果为*则表示许可任意域的请求)
+                        Access-Control-Allow-Credentials: true (可选，表示是否允许发送cookies，默认为true即允许，且需要浏览器配合将xhr.withCredentials设置为true，如果发送↑一条值不能为*)
+                        Access-Control-Expose-Headers: FooBar (可选，需要拿到6个基本字段之外的其他则需在此处添加)
+    非简单请求处理：会在正式通讯前，增加一次http查询请求，先询问服务器是否许可以及可以使用那些请求方法和请求字段，只有得到肯定回复才会发出正式请求，否则报错（预检使用的是OPTIONS方法）
+                    Access-Control-Request-Method
+                    该字段是必须的，用来列出浏览器的CORS请求会用到哪些HTTP方法
+                    Access-Control-Request-Headers
+                    该字段是一个逗号分隔的字符串，指定浏览器CORS请求会额外发送的头信息字段
+                    预检请求的回应：
+                        浏览器否定了"预检"请求，会返回一个正常的HTTP回应，但是没有任何CORS相关的头信息字段。这时，浏览器就会认定，
+                        服务器不同意预检请求，因此触发一个错误，被XMLHttpRequest对象的onerror回调函数捕获
+                    服务器回应的字段:
+                    HTTP回应中，关键的是Access-Control-Allow-Origin字段
+                    Access-Control-Allow-Methods
+                    该字段必需，它的值是逗号分隔的一个字符串，表明服务器支持的所有跨域请求的方法。注意，返回的是所有支持的方法，而不单是浏览器请求的那个方法。这是为了避免多次"预检"请求。
+                    Access-Control-Allow-Headers
+                    如果浏览器请求包括Access-Control-Request-Headers字段，则Access-Control-Allow-Headers字段是必需的
+                    Access-Control-Max-Age
+                    该字段可选，用来指定本次预检请求的有效期
+    一旦服务器通过了"预检"请求，以后每次浏览器正常的CORS请求，就都跟简单请求一样
+    jsonp只支持get请求，CORS更加强大
+
+
+                    
