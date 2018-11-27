@@ -1,0 +1,8 @@
+mapState:在computed中通过展开运算符展开， 
+        ...mapState({}||[]),括号里用数组则将该值直接映射到该数组元素上(字符串形式表示，需要加引号)
+        括号内通过{}表示则可以自定义与state属性名称不同的键名与之映射
+mapMutations:在methods中通过...展开，与...mapState类似 
+展开后都可直接接在this后调用
+components->-> dispatch ->->actions->-> commit ->->mutations->-> mutate ->->state->-> render ->->components
+    ↓                                                  ↑
+    ->   ->   ->   ->   ->    ->    ->    ->    ->    ->  

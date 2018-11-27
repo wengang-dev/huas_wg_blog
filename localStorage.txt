@@ -1,0 +1,6 @@
+localStorage:可以通过setItem(键名,键值) getItem(键名,键值) removeItem(键名) clear() 设置 
+            写入方法可以使用setItem,localStorage.,localStorage["键名"]
+            但是非字符串需要通过序列化与反序列化即JSON.stringfy() & JSON.parse()
+            也可以直接通过.运算符来get和set
+            当前所有浏览器都将localStorage的值限定为String类型，且不能被爬虫抓取，浏览器隐私模式下不可读
+但是执行时为防止某些用户将localStorage禁用，使用该存储方式时应该包含在try{}catch(e){}语句中
