@@ -1,0 +1,5 @@
+区分对象和数组
+Object.prototype.toString().call(target)===”[Object Array]” || ”[Object Object]”
+Object.prototype.toString().call(target).slice(8,-1)===”Array” || ”Object”
+
+ES6识别u数组的方法Array.isArray()

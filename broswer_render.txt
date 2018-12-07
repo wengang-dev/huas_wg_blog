@@ -1,0 +1,15 @@
+浏览器渲染：
+    js下载也会中断DOM树的更新，影响首屏时间主要因素在于下载最慢且必须使用的css文件，页面只有生成renderTree才能开始渲染，
+    页面解析流程：构建DOM，构建CSSOM，生成renderTree，layout，panting，现代浏览器浏览器可以显示不完整的renderTree，
+    也就是说可以构建一部分就先显示一部分，所以首屏时间主要受css影响，css解析快则renderTree构建快则显示的快，
+    script标签的async和defer，async会并行下载并执行，
+    MDN对此的描述是用来通知浏览器该脚本将在文档完成解析后，触发 DOMContentLoaded 事件前执行，
+    css不会阻塞dom解析，link标签会阻塞script标签，以防js代码会访问css属性,遇到script（没有异步标识符）会促使页面渲染更新
+
+    子资源加载
+    网站通常会使用图像，CSS和JavaScript等外部资源。 这些文件需要从网络或缓存中加载。
+    主线程可以在解析构建DOM时逐个请求它们，但为了加快速度，“预加载扫描器”会同时运行。 
+    如果HTML文档中存在错误!未指定文件名。或之类的元素 ，则预加载扫描程序会检查由HTML解析器生成的标记，并向网络线程发送请求
+
+    DOMContentLoad和Load的区别：DOMContentLoad 初始html文档被解析完成时触发，无需等待样式表，
+    图像和子框架的完成加载（必须等待所属的script之前的样式表加载解析完成才会触发），load用于检测一个完全加载的页面(包括所有的图片和文件)

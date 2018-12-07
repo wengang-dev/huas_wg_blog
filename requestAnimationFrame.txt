@@ -1,0 +1,5 @@
+requestAnimationFrame：
+    requestAnimationFrame关键的就是他只是请求浏览器在下一次可以获得的机会去展示一帧画面，
+    而不是在一个已经规划好的间隔。即同一时间点一起更新，减少cpu运算量，且浏览器能够根据页面加载，元素显示，
+    电池的状态来选择requestAnimationFrame的性能，
+    它能够将所有的动画都放到一个浏览器重绘周期里去做，这样能保存你的CPU的循环次数，延长设备使用寿命

@@ -1,0 +1,5 @@
+BFC	(块级格式化上下文)
+通过float overflow不为visible …触发
+作用：BFC元素不被浮动元素所覆盖
+      使得内部元素的margin不重叠
+父级设置为BFC会被子float元素所撑开高度
