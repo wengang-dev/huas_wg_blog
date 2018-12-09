@@ -1,0 +1,40 @@
+类数组对象：拥有length和若干索引属性的对象
+将类数组转化成数组的方法：
+// 1. slice     
+Array.prototype.slice.call(arrayLike); // ["name", "age", "sex"] 
+// 2. splice
+Array.prototype.splice.call(arrayLike, 0); // ["name", "age", "sex"] 
+// 3. ES6 Array.from
+Array.from(arrayLike); // ["name", "age", "sex"] 
+// 4. apply
+Array.prototype.concat.apply([], arrayLike)
+arguments 和对应参数的绑定
+传入的参数，实参和arguments（通过arguments[index]的方法调用参数）的值会共享，当没有传入时则不共享，严格模式下也不会共享
+function foo(name, age, sex, hobbit) {
+
+    console.log(name, arguments[0]); // name name
+
+    // 改变形参
+    name = 'new name';
+
+    console.log(name, arguments[0]); // new name new name
+
+    // 改变arguments
+    arguments[1] = 'new age';
+
+    console.log(age, arguments[1]); // new age new age
+
+    // 测试未传入的是否会绑定
+    console.log(sex); // undefined
+
+    sex = 'new sex';
+
+    console.log(sex, arguments[2]); // new sex undefined
+
+    arguments[3] = 'new hobbit';
+
+    console.log(hobbit, arguments[3]); // undefined new hobbit
+
+}
+
+foo('name', 'age')

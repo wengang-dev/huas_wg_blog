@@ -1,0 +1,36 @@
+函数柯里化:
+function curry(fn, arg) {
+  var length = fn.length
+  var arg = arg || []
+  return function() {
+    var _args = arg.splice(0)
+    var arr = []
+    for (let i = 0; i < arguments.length; i++) {
+      arr[i] = arguments[i]
+      _args.push(arr[i])
+    }
+    if (_args.length < length) {
+      return curry.call(this, fn, _args)
+    } else {
+      return fn.apply(this, _args)
+    }
+  }
+}
+function fn(a, b, c) {
+  return a + b + c
+}
+var init = curry(fn) //function
+var one = init(1) //function
+var two = one(2) //function
+var three = two(3) //3
+
+简洁写法:
+var curry = fn =>
+  (judge = (...args) =>
+args.length === fn.length
+  ? fn(...args)
+ : arg => judge(...args, arg))
+这样理解柯里化 ：用闭包把参数保存起来，当参数的数量足够执行函数了，就开始执行函数，有没有毛病
+
+函数组合：Pointfree 的本质就是使用一些通用的函数，组合出各种复杂运算。上层运算不要直接操作数据，而是通过底层函数去处理。即不使用所要处理的值，只合成运算过程。
+pointfree 模式能够帮助我们减少不必要的命名，让代码保持简洁和通用，更符合语义，更容易复用，测试也变得轻而易举

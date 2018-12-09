@@ -1,0 +1,3 @@
+事件流：stoppropagation 既可以组织事件冒泡 也可以阻止事件捕获，
+stopImmediatePropagation具有stoppropagation的作用而且可以阻止该注册节点的其余注册函数，
+如果一个节点同时注册了捕获和冒泡事件，则触发顺序按照注册顺序

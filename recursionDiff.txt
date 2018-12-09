@@ -1,0 +1,33 @@
+普通递归和尾递归的区别：
+// 尾调用
+function f(x){
+    return g(x);
+}
+
+// 非尾调用
+function f(x){
+    return g(x) + 1;
+}
+为了模拟执行上下文栈的行为，让我们定义执行上下文栈是一个数组：
+    ECStack = [];
+我们模拟下第一个尾调用函数执行时的执行上下文栈变化：
+// 伪代码
+ECStack.push(<f> functionContext);
+
+ECStack.pop();
+
+ECStack.push(<g> functionContext);
+
+ECStack.pop();
+我们再来模拟一下第二个非尾调用函数执行时的执行上下文栈变化：
+ECStack.push(<f> functionContext);
+
+ECStack.push(<g> functionContext);
+
+ECStack.pop();
+
+ECStack.pop();
+也就说尾调用函数执行时，虽然也调用了一个函数，但是因为原来的的函数执行完毕，执行上下文会被弹出，执行上下文栈中相当于只多压入了一个执行上下文。然而非尾调用函数，就会创建多个执行上下文压入执行上下文栈。
+函数调用自身，称为递归。如果尾调用自身，就称为尾递归。
+
+尾递归实现：将内部变量都作为参数传入函数

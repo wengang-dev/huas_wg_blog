@@ -1,0 +1,8 @@
+惰性函数：解决每次都要进行判断的这个问题，解决原理很简单，重写函数
+var foo = function() {
+    var t = new Date();
+    foo = function() {
+        return t;
+    };
+    return foo();
+};（返回第一次调用函数时的时间）
