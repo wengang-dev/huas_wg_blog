@@ -1,0 +1,39 @@
+async 作用:
+      默认返回值位一个promise
+      如果返回值为非promise值则会自动用Promise.resolve()包装
+      如果显示返回promise则以当前返回值为准
+      语义上理解:async表示函数内部有异步操作
+                一般await关键字 要在async关键字函数的内部 在外部会报错
+await 作用:
+     await等待的是右侧表达式的结果
+     也就是说，右侧如果是函数，那么函数的return值就是「表达式的结果」。
+     右侧如果是一个 'hello' 或者什么值，那表达式的结果就是 'hello'。
+
+async function async1() {
+    console.log( 'async1 start' )
+    await async2()
+    console.log( 'async1 end' )
+}
+
+async function async2() {
+    console.log( 'async2' )
+}
+async1()
+console.log( 'script start' )
+这里注意一点，可能大家都知道await会让出线程，阻塞后面的代码，那么上面例子中， async2 和 script start 谁先打印呢？
+是从左向右执行，一旦碰到await直接跳出，阻塞 async2() 的执行？
+还是从右向左，先执行async2后，发现有await关键字，于是让出线程，阻塞代码呢？
+实践的结论是，从右向左的。先打印async2，后打印的 script start。
+
+
+await 等到之后，做了一件什么事情？
+那么右侧表达式的结果，就是await要等的东西。
+等到之后，对于await来说，分2个情况：
+不是promise对象
+是promise对象
+如果不是 promise , await会阻塞后面的代码，先执行async外面的同步代码，同步代码执行完，再回到async内部，把这个非promise的东西，作为 await表达式的结果。
+如果它等到的是一个 promise 对象，await 也会暂停async后面的代码，先执行async外面的同步代码，等着 Promise 对象 fulfilled，然后把 resolve 的参数作为 await 表达式的运算结果
+
+对于 awaitPromise.resolve(undefined) 如何理解呢？
+https://developer.mozilla.org/zh-CN/docs/Web/JavaScript/Reference/Operators/await
+根据 MDN 原话我们知道：如果一个 Promise 被传递给一个 await 操作符，await 将等待 Promise 正常处理完成并返回其处理结果。
