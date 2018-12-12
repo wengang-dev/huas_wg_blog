@@ -37,3 +37,6 @@ await 等到之后，做了一件什么事情？
 对于 awaitPromise.resolve(undefined) 如何理解呢？
 https://developer.mozilla.org/zh-CN/docs/Web/JavaScript/Reference/Operators/await
 根据 MDN 原话我们知道：如果一个 Promise 被传递给一个 await 操作符，await 将等待 Promise 正常处理完成并返回其处理结果。
+
+await 命令后面的 Promise 对象，运行结果可能是 rejected，所以最好把 await 命令放在 try...catch 代码块中。
+且不能用于foreach循环，在foreach中为同步执行而不是链式执行
