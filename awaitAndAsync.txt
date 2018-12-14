@@ -40,3 +40,5 @@ https://developer.mozilla.org/zh-CN/docs/Web/JavaScript/Reference/Operators/awai
 
 await 命令后面的 Promise 对象，运行结果可能是 rejected，所以最好把 await 命令放在 try...catch 代码块中。
 且不能用于foreach循环，在foreach中为同步执行而不是链式执行
+
+
