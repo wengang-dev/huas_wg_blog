@@ -1,0 +1,13 @@
+node不允许重写exports
+node模块中不能将需要向外暴露的变量直接赋值给exports
+当exports和module.exports同时存在时，只有module.exports生效
+module.exports向外提供单个的变量，函数或者对象
+
+exports导出的究竟是什么
+    最终在程序中导出的是module.exports,exports只是对moduke.exports的一个全局引用，
+    最初被定义为一个可以添加属性的空对象，所以exports.func只是module.exports.func的一个缩写
+    所以,如果吧exports设置为其他的则打破了exports对module.exports的引用关系，而真正导出的是module.exports
+    如果想回到初始状态可以再一次引用module.exports
+
+require引入为同步阻塞，可以不添加后缀名，node会自动按照 .js .json .node的顺序取查找
+    如果引入的文件夹，则会默认主动去寻找index.js(可修改) 
