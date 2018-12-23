@@ -1,0 +1,7 @@
+用户可以通过new CustomEvent(('eventName',{
+    bubbles:true, //冒泡
+    detail:{
+        //事件附带的数据
+    }
+})) //CustomEvent可用Event替代
+
