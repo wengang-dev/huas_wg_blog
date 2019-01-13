@@ -1,0 +1,17 @@
+我们实际想要观察的自定义元素的属性会发生变化
+observaAttributes() 被设计成一个静态方法，目的是希望此方法被任何子类或组件继承
+且只对其进行一次声明
+通过对需要监听的属性进行get和 set的代理实现监听
+static get observedAttributes() {
+    return ['id', 'my-custom-attribute', 'data-something', 'disabled'];
+}
+
+自定义标签生命周期函数
+    在custom element的构造函数中，可以指定多个不同的回调函数，它们将会在元素的不同生命时期被调用：
+    connectedCallback：当 custom element首次被插入文档DOM时，被调用。
+    disconnectedCallback：当 custom element从文档DOM中删除时，被调用。
+    adoptedCallback：当 custom element被移动到新的文档时，被调用。
+    attributeChangedCallback: 当 custom element增加、删除、修改自身属性时，被调用。
+
+shadow root 兼容性差
+template 不支持IE
