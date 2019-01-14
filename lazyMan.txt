@@ -1,0 +1,62 @@
+function LazyMan(name) {
+  let _lazy = {
+    eat: function (food) {
+      queue.push(() => {
+        console.log(`eat ${food} !`);
+        this.next();
+      });
+      return this;
+    },
+    sayHi: function (name) {
+      queue.push(() => {
+        console.log('Hi ' + name + '!');
+        this.next();
+      })
+      return this;
+    },
+    sleep: function (time) {
+      queue.push(() => {
+        setTimeout(() => {
+          // todo
+          this.next();
+        }, time * 1000);
+      });
+      return this;
+    },
+    sleepFirst: function (time) {
+      queue.unshift(() => {
+        setTimeout(() => {
+          // todo
+          this.next();
+        }, time * 1000);
+      });
+      return this;
+    },
+    next: function () {
+      console.log(queue)
+      let fn = queue.shift();
+      if (fn) {
+        fn();
+      }
+    }
+  };
+  let queue = [];
+  _lazy.sayHi(name);
+  setTimeout(() => {
+    _lazy.next()
+  })
+  console.log('before return!')
+  return _lazy;
+};
+
+LazyMan("kakao")
+  .eat("apple")
+  .sleep(2)
+  .eat("banana")
+  .sleepFirst(2);
+
+  实现了一个lazyman函数
+  使用队列将链式调用的函数存储起来 使用定时器将触发第一个函数的操作推到下一轮事件循环
+  执行顺序为主线程执行完毕(即将所哟链式调用的函数加入queue时)
+  setTimeOut的触发行为开始执行 链式触发每一个队列函数中的next
+  
